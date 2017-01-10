@@ -11,67 +11,196 @@
 |
 */
 
+use Eduardokum\LaravelBoleto\Pessoa;
+use Eduardokum\LaravelBoleto\Boleto\Banco\Sicredi;
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-use Eduardokum\LaravelBoleto\Pessoa;
-use Eduardokum\LaravelBoleto\Boleto\Banco\Sicred;
-
 Route::get('boleto', function () {
+    return view('boleto');
+});
 
-    $beneficiario = new Pessoa([
-        'nome' => 'ACME',
-        'endereco' => 'Rua um, 123',
-        'cep' => '99999-999',
-        'uf' => 'UF',
-        'cidade' => 'CIDADE',
-        'documento' => '99.999.999/9999-99',
-    ]);
 
-    $pagador = new Pessoa([
-        'nome' => 'Cliente',
-        'endereco' => 'Rua um, 123',
-        'bairro' => 'Bairro',
-        'cep' => '99999-999',
-        'uf' => 'UF',
-        'cidade' => 'CIDADE',
-        'documento' => '999.999.999-99',
-    ]);
 
-    $boletoArray = [
-        'logo' => 'logo.jpg', // Logo da empresa
-        'dataVencimento' => new \Carbon\Carbon('1790-01-01'),
-        'valor' => 100.00,
-        'multa' => 10.00, // porcento
-        'juros' => 2.00, // porcento ao mes
-        'juros_apos' =>  1, // juros e multa após
-        'diasProtesto' => false, // protestar após, se for necessário
-        'numero' => 1,
-        'numeroDocumento' => 1,
-        'pagador' => $pagador, // Objeto PessoaContract
-        'beneficiario' => $beneficiario, // Objeto PessoaContract
-        'agencia' => 9999, // BB, Bradesco, CEF, HSBC, Itáu
-        'agenciaDv' => 9, // se possuir
-        'conta' => 99999, // BB, Bradesco, CEF, HSBC, Itáu, Santander
-        'contaDv' => 9, // Bradesco, HSBC, Itáu
-        'carteira' => 11, // BB, Bradesco, CEF, HSBC, Itáu, Santander
-        'convenio' => 9999999, // BB
-        'variacaoCarteira' => 99, // BB
-        'range' => 99999, // HSBC
-        'codigoCliente' => 99999, // Bradesco, CEF, Santander
-        'ios' => 0, // Santander
-        'descricaoDemonstrativo' => ['msg1', 'msg2', 'msg3'], // máximo de 5
-        'instrucoes' =>  ['inst1', 'inst2'], // máximo de 5
-        'aceite' => 1,
-        'especieDoc' => 'DM',
-    ];
+Route::get('boleto/pdf', function () {
 
-    $boleto = new Sicred($boletoArray);
+    $beneficiario = new Pessoa(
+        [
+            'nome'      => 'ACME',
+            'endereco'  => 'Rua um, 123',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '99.999.999/9999-99',
+        ]
+    );
 
-    //return $boleto->renderPDF();
-    // ou
-    return $boleto->renderHTML();
+    $pagador = new Pessoa(
+        [
+            'nome'      => 'Cliente',
+            'endereco'  => 'Rua um, 123',
+            'bairro'    => 'Bairro',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '999.999.999-99',
+        ]
+    );
+
+    $boleto = new Sicredi(
+        [
+            'logo'                   => 'logo.png',
+            'dataVencimento'         => new \Carbon\Carbon(),
+            'valor'                  => 100,
+            'multa'                  => false,
+            'juros'                  => false,
+            'numero'                 => 1,
+            'numeroDocumento'        => 1,
+            'pagador'                => $pagador,
+            'beneficiario'           => $beneficiario,
+            'carteira'               => '1',
+            'byte'                   => 2,
+            'agencia'                => 1111,
+            'posto'                  => 11,
+            'conta'                  => 11111,
+            'descricaoDemonstrativo' => ['demonstrativo 1', 'demonstrativo 2', 'demonstrativo 3'],
+            'instrucoes'             => ['instrucao 1', 'instrucao 2', 'instrucao 3'],
+            'aceite'                 => 'S',
+            'especieDoc'             => 'DM',
+        ]
+    );
+
+    $pdf = new Eduardokum\LaravelBoleto\Boleto\Render\Pdf();
+    $pdf->addBoleto($boleto);
+    $pdf->gerarBoleto($pdf::OUTPUT_SAVE, 'arquivos' . DIRECTORY_SEPARATOR . 'sicredi.pdf');    // ou
+
+    $headers = array(
+              'Content-Type: application/pdf',
+            );
+
+    $file = public_path() . '/arquivos/sicredi.pdf';
+
+    return response()->download($file, 'boleto-sicredi.pdf', $headers);
 
 });
 
+Route::get('boleto/html', function () {
+
+    $beneficiario = new Pessoa(
+        [
+            'nome'      => 'ACME',
+            'endereco'  => 'Rua um, 123',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '99.999.999/9999-99',
+        ]
+    );
+
+    $pagador = new Pessoa(
+        [
+            'nome'      => 'Cliente',
+            'endereco'  => 'Rua um, 123',
+            'bairro'    => 'Bairro',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '999.999.999-99',
+        ]
+    );
+
+    $boleto = new Sicredi(
+        [
+            'logo'                   => 'logo.png',
+            'dataVencimento'         => new \Carbon\Carbon(),
+            'valor'                  => 100,
+            'multa'                  => false,
+            'juros'                  => false,
+            'numero'                 => 1,
+            'numeroDocumento'        => 1,
+            'pagador'                => $pagador,
+            'beneficiario'           => $beneficiario,
+            'carteira'               => '1',
+            'byte'                   => 2,
+            'agencia'                => 1111,
+            'posto'                  => 11,
+            'conta'                  => 11111,
+            'descricaoDemonstrativo' => ['demonstrativo 1', 'demonstrativo 2', 'demonstrativo 3'],
+            'instrucoes'             => ['instrucao 1', 'instrucao 2', 'instrucao 3'],
+            'aceite'                 => 'S',
+            'especieDoc'             => 'DM',
+        ]
+    );
+
+    return $boleto->renderHtml();
+
+});
+
+Route::get('boleto/remessa', function () {
+
+    $beneficiario = new Pessoa(
+        [
+            'nome'      => 'ACME',
+            'endereco'  => 'Rua um, 123',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '99.999.999/9999-99',
+        ]
+    );
+
+    $pagador = new Pessoa(
+        [
+            'nome'      => 'Cliente',
+            'endereco'  => 'Rua um, 123',
+            'bairro'    => 'Bairro',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '999.999.999-99',
+        ]
+    );
+
+    $boleto = new Sicredi(
+        [
+            'logo'                   => 'logo.png',
+            'dataVencimento'         => new \Carbon\Carbon(),
+            'valor'                  => 100,
+            'multa'                  => false,
+            'juros'                  => false,
+            'numero'                 => 1,
+            'numeroDocumento'        => 1,
+            'pagador'                => $pagador,
+            'beneficiario'           => $beneficiario,
+            'carteira'               => '1',
+            'byte'                   => 2,
+            'agencia'                => 1111,
+            'posto'                  => 11,
+            'conta'                  => 11111,
+            'descricaoDemonstrativo' => ['demonstrativo 1', 'demonstrativo 2', 'demonstrativo 3'],
+            'instrucoes'             => ['instrucao 1', 'instrucao 2', 'instrucao 3'],
+            'aceite'                 => 'S',
+            'especieDoc'             => 'DM',
+        ]
+    );
+
+    // Criando arquivo remessa
+    $remessa = new \Eduardokum\LaravelBoleto\Cnab\Remessa\Cnab400\Banco\Sicredi(
+        [
+            'agencia'      => 2606,
+            'carteira'     => '1',
+            'conta'        => 12510,
+            'idremessa'    => 1,
+            'beneficiario' => $beneficiario,
+        ]
+    );
+
+    $remessa->addBoleto($boleto);
+    $remessa->save('arquivos' . DIRECTORY_SEPARATOR . 'sicredi.txt');
+
+    //Retornando arquivo .txt da remessa para download
+    return response()->download('arquivos/sicredi.txt', 'remessa-sicredi.txt', ['application/txt']);
+
+});
