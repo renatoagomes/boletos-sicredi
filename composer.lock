@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "887b74cb4af9a7698c790a22fafbfbdd",
-    "content-hash": "4669bde892cc91c3cd9c21e26f21c993",
+    "hash": "22396ac15d938d6e94f19a9907e6f7a1",
+    "content-hash": "2420dba9138353fd4db2315ebb6c1c8c",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -163,23 +163,28 @@
         },
         {
             "name": "eduardokum/laravel-boleto",
-            "version": "0.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/eduardokum/laravel-boleto.git",
-                "reference": "3baf5541914a6f73cd17e0ca14cc0deb2e1af86b"
+                "reference": "574c0b28ccfd15bf0c60dfeba3478d27c01e7b1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eduardokum/laravel-boleto/zipball/3baf5541914a6f73cd17e0ca14cc0deb2e1af86b",
-                "reference": "3baf5541914a6f73cd17e0ca14cc0deb2e1af86b",
+                "url": "https://api.github.com/repos/eduardokum/laravel-boleto/zipball/574c0b28ccfd15bf0c60dfeba3478d27c01e7b1f",
+                "reference": "574c0b28ccfd15bf0c60dfeba3478d27c01e7b1f",
                 "shasum": ""
             },
             "require": {
                 "ext-intl": "*",
+                "illuminate/support": ">=5.1.0",
                 "itbz/fpdf": "^1.7",
                 "nesbot/carbon": "~1.20",
                 "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.1.2|3.3.x-dev",
+                "phpunit/phpunit": "~5.0"
             },
             "type": "library",
             "autoload": {
@@ -203,7 +208,7 @@
                 "eduardokum",
                 "laravel-boleto"
             ],
-            "time": "2016-10-26 11:05:05"
+            "time": "2017-01-05 16:05:18"
         },
         {
             "name": "itbz/fpdf",
@@ -3526,7 +3531,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "eduardokum/laravel-boleto": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
