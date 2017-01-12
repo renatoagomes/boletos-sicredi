@@ -4,8 +4,14 @@ php:
   - 5.6
 
 before_script:
-    - composer self-update
-    - composer install --no-interaction
+  - cp .env.travis .env
+  - mysql -e 'create database homestead_test;'
+  - composer self-update
+  - composer install --no-interaction
 
 script:
-    - vendor/bin/phpunit
+- vendor/bin/phpunit
+
+env:
+  global:
+    secure: UFmJKilcJU5GfnOLy3eprjjRJt6sKGWjzzoyrn/NfhwjaolbmYwqBbHRA8X2jZTe/Qu7kMXvpztGve2n5w2RhFVCo8wm2Ce0AzNW3dockL4kEStrablhSS3kVme3ctP4UVujs8b0Z284tqL66U8vWsZetnKqwoo3c0D+XDAXLkVhsR/6D80RU6cKIuw9XYL6/wLtGj+CGviHWJUyPBliWFMJxIqMczwG7j8+MIzyUDclUCwBpWvGVP+bOAfr5zXzhC9B4uSIuutRY/xcrLXEVS2VDF3Ub5g+rox+vyFq5Uyw8JjpuR6wT+hmHqF19/ty5HOdqtK+enEnipcgcLkqjg8E6oxba8dXJDx7osQKFn+aP0799eyzta/h75PJM3qZE0FkT0UFIFS9PzI1ycOVPItzdqv4ZWpygbpUTL2JkjNiNpR2o7yauiYs3GJ3C8Z6Bov4K3omm5tzKdi1O8NViJkdZAibBvtbGnDS7Ix462M9kC7r7QUHmQKP8T5W6EJ9tYy05Q1Xtl8cyVCcDQsV8uTH5hlGaeZI3m9uBF3zKu2f10jYsVziIM6qZd8D5ll3UwhUG6po5Ul2HYRvBZ0Qofzvn3FQUsYFQqnKZrBjhoLvZoL/Dnm6UsaP36Xgz9eDmNBFaUQ6WGs6iRHiDGdHHgyF3+ENIUhSyLQj5lE0SGs=
