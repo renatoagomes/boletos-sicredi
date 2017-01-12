@@ -23,11 +23,27 @@ class BoletoController extends Controller
 
 
     /**
-     * Rota para a geracao do pdf
+     * Rota para teste da geracao do pdf
      */
     public function testeBoletoPDF()
     {
-        return $this->repositorioBoletos->gerarBoleto();
+        return $this->repositorioBoletos->testeBoletoPDF();
+    }
+
+    /**
+     * Rota para teste da geracao do html
+     */
+    public function testeBoletoHTML()
+    {
+        return $this->repositorioBoletos->testeBoletoHTML();
+    }
+
+    /**
+     * Rota para teste da geracao da remessa
+     */
+    public function testeBoletoRemessa()
+    {
+        return $this->repositorioBoletos->testeBoletoRemessa();
     }
 
 }
