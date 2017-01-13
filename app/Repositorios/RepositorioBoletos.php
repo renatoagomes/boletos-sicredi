@@ -2,22 +2,85 @@
 
 namespace App\Repositorios;
 
-use Eduardokum\LaravelBoleto\Pessoa;
-use Eduardokum\LaravelBoleto\Boleto\Banco\Sicredi;
-use Eduardokum\LaravelBoleto\Boleto\Render\Pdf;
+use Eduardokum\LaravelBoleto\Pessoa as Pessoa;
+use Eduardokum\LaravelBoleto\Boleto\Banco\Sicredi as BoletoSicredi;
+use Eduardokum\LaravelBoleto\Boleto\Render\Pdf as Pdf;
 
 /**
  * Classe para intermediar a geração de boletos.
  */
 class RepositorioBoletos
 {
+    /** @var Pessoa Instancia de Pessoa */
     protected $beneficiario;
+
+    /** @var Pessoa Instancia de Pessoa */
     protected $pagador;
-    protected $logo;
-    protected $descricaoDemonstrativo;
+
+    /** @var string Path para o logo que sera inserido no boleto */
+    protected $logoEmpresa;
+
+    /** @var array Array com as strings que serao inseridas no demonstrativo do boleto */
+    protected $descDemonstrativo;
+
+    /** @var array Array com as strings que serao inseridas no rodape do boleto */
     protected $instrucoesRodape;
+
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioNome;
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioEndereco;
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioCep;
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioUf;
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioCidade;
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioDocumento;
+
+    protected $beneficiarioAgencia;
+    protected $beneficiarioContaCorrente;
+
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioPosto;
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioCarteira;
+    /** @var string Dados do beneficiario */
+    protected $beneficiarioEspeciedoc;
+
+    /** @var array Array com os outros dados do boleto **/
     protected $dadosBoleto;
 
+    /**
+     * Construtor para executar quaisquer operacoes necessarias
+     */
+    function __construct()
+    {
+        $this->setup();
+    }
+
+    /**
+     * Metodo responsavel por obter as informacoes sensiveis do .env
+     * e atribuilas as propriedades do repositorio
+     */
+    private function setup()
+    {
+        /** Dados extras do Beneficiario **/
+        $this->beneficiarioNome = env('BENEFICIARIO_NOME');
+        $this->beneficiarioEndereco = env('BENEFICIARIO_ENDERECO');
+        $this->beneficiarioCep = env('BENEFICIARIO_CEP');
+        $this->beneficiarioUf = env('BENEFICIARIO_UF');
+        $this->beneficiarioCidade = env('BENEFICIARIO_CIDADE');
+        $this->beneficiarioDocumento = env('BENEFICIARIO_DOCUMENTO');
+
+        /** Dados bancarios **/
+        $this->beneficiarioAgencia = env('BENEFICIARIO_AGENCIA');
+        $this->beneficiarioContaCorrente = env('BENEFICIARIO_CONTACORRENTE');
+        $this->beneficiarioPosto = env('BENEFICIARIO_POSTO');
+        $this->beneficiarioCarteira = env('BENEFICIARIO_CARTEIRA');
+        $this->beneficiarioEspeciedoc = env('BENEFICIARIO_ESPECIEDOC');
+    }
 
     /**
      * Metodo para gerar um boleto
@@ -28,12 +91,12 @@ class RepositorioBoletos
 
         $beneficiario = new Pessoa(
             [
-                'nome'      => 'ACME',
-                'endereco'  => 'Rua um, 123',
-                'cep'       => '99999-999',
-                'uf'        => 'UF',
-                'cidade'    => 'CIDADE',
-                'documento' => '99.999.999/9999-99',
+                'nome'      => $this->beneficiarioNome,
+                'endereco'  => $this->beneficiarioEndereco,
+                'cep'       => $this->beneficiarioCep,
+                'uf'        => $this->beneficiariouUf,
+                'cidade'    => $this->beneficiarioCidade,
+                'documento' => $this->beneficiarioDocumento,
             ]
         );
 
@@ -62,9 +125,9 @@ class RepositorioBoletos
                 'beneficiario'           => $beneficiario,
                 'carteira'               => '1',
                 'byte'                   => 2,
-                'agencia'                => 1111,
-                'posto'                  => 11,
-                'conta'                  => 11111,
+                'agencia'                => $this->beneficiarioAgencia,
+                'posto'                  => $this->beneficiarioPosto,
+                'conta'                  => $this->beneficiarioContaCorrente,
                 'descricaoDemonstrativo' => ['demonstrativo 1', 'demonstrativo 2', 'demonstrativo 3'],
                 'instrucoes'             => ['instrucao 1', 'instrucao 2', 'instrucao 3'],
                 'aceite'                 => 'S',
