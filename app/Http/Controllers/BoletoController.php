@@ -27,6 +27,16 @@ class BoletoController extends Controller
      */
     public function testeBoletoPDF()
     {
+        $this->repositorioBoletos->setPagador([
+            'nome'      => 'Cliente',
+            'endereco'  => 'Rua um, 123',
+            'bairro'    => 'Bairro',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '999.999.999-99',
+        ]);
+
         return $this->repositorioBoletos->testeBoletoPDF();
     }
 
