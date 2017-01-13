@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class App\Http\Controllers\BoletoController | Geração de boletos - Sicredi</title>
+
+	<link rel="stylesheet" href="resources/bootstrap.min.css?973e37a8502921d56bc02bb55321f45b072b6f71">
+	<link rel="stylesheet" href="resources/style.css?49f43d3208c5d7e33fa16d36107a345bf11cc00d">
+
+</head>
+
+<body>
+	<nav id="navigation" class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="index.html" class="navbar-brand">Geração de boletos - Sicredi</a>
+			</div>
+			<div class="collapse navbar-collapse">
+
+                <form id="search" class="navbar-form navbar-left" role="search">
+                    <input type="hidden" name="cx" value="">
+                    <input type="hidden" name="ie" value="UTF-8">
+                    <div class="form-group">
+                        <input type="text" name="q" class="search-query form-control" placeholder="Search">
+					</div>
+				</form>
+
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="namespace-App.Http.Controllers.html" title="Summary of App\Http\Controllers"><span>Namespace</span></a>
+					</li>
+					<li class="active">
+<span>Class</span>					</li>
+
+
+
+
+
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div id="left">
+	<div id="menu">
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+					<li class="active">
+						<a href="namespace-App.html">
+							App<span></span>
+						</a>
+							<ul>
+					<li>
+						<a href="namespace-App.Console.html">
+							Console						</a>
+							</li>
+					<li>
+						<a href="namespace-App.Exceptions.html">
+							Exceptions						</a>
+							</li>
+					<li class="active">
+						<a href="namespace-App.Http.html">
+							Http<span></span>
+						</a>
+							<ul>
+					<li class="active">
+						<a href="namespace-App.Http.Controllers.html">
+							Controllers<span></span>
+						</a>
+							<ul>
+					<li>
+						<a href="namespace-App.Http.Controllers.Auth.html">
+							Auth						</a>
+							</li>
+								</ul></li>
+					<li>
+						<a href="namespace-App.Http.Middleware.html">
+							Middleware						</a>
+							</li>
+								</ul></li>
+					<li>
+						<a href="namespace-App.Providers.html">
+							Providers						</a>
+							</li>
+					<li>
+						<a href="namespace-App.Repositorios.html">
+							Repositorios						</a>
+							</li>
+								</ul></li>
+			</ul>
+		</div>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-App.Http.Controllers.BoletoController.html">BoletoController</a></li>
+				<li><a href="class-App.Http.Controllers.Controller.html">Controller</a></li>
+			</ul>
+
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+	<div id="rightInner">
+<div id="content" class="class">
+	<h1>Class BoletoController</h1>
+
+
+
+	<dl class="tree well">
+		<dd style="padding-left:0px">
+Illuminate\Routing\Controller
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+			<a href="class-App.Http.Controllers.Controller.html"><span>App\Http\Controllers\Controller</span></a>
+			
+			
+			 uses 
+					Illuminate\Foundation\Auth\Access\AuthorizesRequests (not available)
+
+			
+					Illuminate\Foundation\Bus\DispatchesJobs (not available)
+
+			
+					Illuminate\Foundation\Validation\ValidatesRequests (not available)
+
+			
+		</dd>
+		<dd style="padding-left:60px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>App\Http\Controllers\BoletoController</span></b>			
+			
+			
+		</dd>
+	</dl>
+
+
+
+
+
+
+
+
+	<div class="alert alert-info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-App.html">App</a>\<a href="namespace-App.Http.html">Http</a>\<a href="namespace-App.Http.Controllers.html">Controllers</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-App.Http.Controllers.BoletoController.html#9-177" title="Go to source code">Http/Controllers/BoletoController.php</a>
+		<br>
+	</div>
+
+
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><h2>Methods summary</h2></div>
+			<table class="summary table table-bordered table-striped methods" id="methods">
+		<tr data-order="__construct" id="___construct">
+
+			<td class="attributes"><code>
+				 public 
+				
+				
+				</code>
+			</td>
+
+			<td class="name"><div>
+			<a class="anchor" href="#___construct">#</a>
+			<code><a href="source-class-App.Http.Controllers.BoletoController.html#17-23" title="Go to source code">__construct</a>( <span><code><a href="class-App.Repositorios.RepositorioBoletos.html">App\Repositorios\RepositorioBoletos</a></code> <var>$repositorio</var></span> )</code>
+
+			<div class="description short">
+				<p>Construtor recebendo instancia do Repositorio de Boletos</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Construtor recebendo instancia do Repositorio de Boletos</p>
+
+
+
+
+
+
+
+			</div>
+			</div></td>
+		</tr>
+		<tr data-order="testeBoletoPDF" id="_testeBoletoPDF">
+
+			<td class="attributes"><code>
+				 public 
+				Download
+				
+				</code>
+			</td>
+
+			<td class="name"><div>
+			<a class="anchor" href="#_testeBoletoPDF">#</a>
+			<code><a href="source-class-App.Http.Controllers.BoletoController.html#25-56" title="Go to source code">testeBoletoPDF</a>( )</code>
+
+			<div class="description short">
+				<p>Rota para teste da geracao do pdf</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Rota para teste da geracao do pdf</p>
+
+
+
+					<h4>Returns</h4>
+					<div class="list">
+						Download<br>O arquivo do boleto.pdf
+					</div>
+
+
+
+
+			</div>
+			</div></td>
+		</tr>
+		<tr data-order="testeBoletoHTML" id="_testeBoletoHTML">
+
+			<td class="attributes"><code>
+				 public 
+				HTML
+				
+				</code>
+			</td>
+
+			<td class="name"><div>
+			<a class="anchor" href="#_testeBoletoHTML">#</a>
+			<code><a href="source-class-App.Http.Controllers.BoletoController.html#58-89" title="Go to source code">testeBoletoHTML</a>( )</code>
+
+			<div class="description short">
+				<p>Rota para teste da geracao do html</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Rota para teste da geracao do html</p>
+
+
+
+					<h4>Returns</h4>
+					<div class="list">
+						HTML<br>View com boleto gerado
+					</div>
+
+
+
+
+			</div>
+			</div></td>
+		</tr>
+		<tr data-order="testeBoletoRemessa" id="_testeBoletoRemessa">
+
+			<td class="attributes"><code>
+				 public 
+				Download
+				
+				</code>
+			</td>
+
+			<td class="name"><div>
+			<a class="anchor" href="#_testeBoletoRemessa">#</a>
+			<code><a href="source-class-App.Http.Controllers.BoletoController.html#91-120" title="Go to source code">testeBoletoRemessa</a>( )</code>
+
+			<div class="description short">
+				<p>Rota para teste da geracao da remessa gerando remessa de 1 boleto</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Rota para teste da geracao da remessa gerando remessa de 1 boleto</p>
+
+
+
+					<h4>Returns</h4>
+					<div class="list">
+						Download<br>remessa.txt para homologacao de 1 boleto
+					</div>
+
+
+
+
+			</div>
+			</div></td>
+		</tr>
+		<tr data-order="gerarArquivosHomologacao" id="_gerarArquivosHomologacao">
+
+			<td class="attributes"><code>
+				 public 
+				Download
+				
+				</code>
+			</td>
+
+			<td class="name"><div>
+			<a class="anchor" href="#_gerarArquivosHomologacao">#</a>
+			<code><a href="source-class-App.Http.Controllers.BoletoController.html#122-175" title="Go to source code">gerarArquivosHomologacao</a>( )</code>
+
+			<div class="description short">
+				<p>Rota para gerar 10 boletos e o arquivo remessa deles para homologacao</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>Rota para gerar 10 boletos e o arquivo remessa deles para homologacao</p>
+
+<p>Devolve download do 'arquivos.zip' contendo os 10 titulos e arquivo remessa para homologacao.</p>
+
+
+
+					<h4>Returns</h4>
+					<div class="list">
+						Download<br>arquivos.zip
+					</div>
+
+
+
+
+			</div>
+			</div></td>
+		</tr>
+			</table>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+		<div class="panel panel-default">
+            <div class="panel-heading"><h2>Properties summary</h2></div>
+			<table class="summary table table-bordered table-striped properties" id="properties">
+		<tr data-order="repositorioBoletos" id="$repositorioBoletos">
+			<td class="attributes"><code>
+				protected  
+				<code><a href="class-App.Repositorios.RepositorioBoletos.html">App\Repositorios\RepositorioBoletos</a></code>
+			</code></td>
+
+			<td class="name">
+					<a href="source-class-App.Http.Controllers.BoletoController.html#12-15" title="Go to source code"><var>$repositorioBoletos</var></a>
+
+				<div class="description short">
+					<p>$repositorioBoletos Instancia do repositorio com a logica operacional</p>
+				</div>
+
+				<div class="description detailed hidden">
+					<p>$repositorioBoletos Instancia do repositorio com a logica operacional</p>
+
+				</div>
+			</td>
+			<td class="value">
+				<div>
+					<a href="#$repositorioBoletos" class="anchor">#</a>
+					<code></code>
+				</div>
+			</td>
+		</tr>
+			</table>
+		</div>
+
+
+
+
+
+
+</div>
+	</div>
+
+	<div id="footer">
+		Geração de boletos - Sicredi API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
