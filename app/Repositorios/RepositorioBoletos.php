@@ -222,7 +222,6 @@ class RepositorioBoletos
     {
         //Salvando na pasta arquivos para retornar
         $remessa->save('arquivos' . DIRECTORY_SEPARATOR . 'sicredi.txt');
-        dd('inside downloadRemessa', $remessa);
         return response()->download('arquivos/sicredi.txt', 'remessa-sicredi.txt', ['application/txt']);
     }
 }
