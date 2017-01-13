@@ -5,6 +5,7 @@ namespace App\Repositorios;
 use Eduardokum\LaravelBoleto\Pessoa as Pessoa;
 use Eduardokum\LaravelBoleto\Boleto\Banco\Sicredi as BoletoSicredi;
 use Eduardokum\LaravelBoleto\Boleto\Render\Pdf as Pdf;
+use Eduardokum\LaravelBoleto\Cnab\Remessa\Cnab400\Banco\Sicredi as RemessaSicredi;
 
 /**
  * Classe para intermediar a geração de boletos.
@@ -135,7 +136,6 @@ class RepositorioBoletos
         $this->sequencialNossoNumero = array_key_exists('sequencialNossoNumero', $arrayDadosBoleto) ? $arrayDadosBoleto['sequencialNossoNumero'] : null;
         $this->instrucoesCobranca = array_key_exists('instrucoesCobranca', $arrayDadosBoleto) ? $arrayDadosBoleto['instrucoesCobranca'] : null;
         $this->descDemonstrativo = array_key_exists('descDemonstrativo', $arrayDadosBoleto) ? $arrayDadosBoleto['descDemonstrativo'] : null;
-
     }
 
     /**
@@ -189,127 +189,40 @@ class RepositorioBoletos
     }
 
     /**
-     * Metodo para testar a geracao do HTML do boleto
+     * Metodo para testar a geracao da Remessa
+     *
+     * @param $boletos array Array com as instancias de BoletoSicredi que serao inclusos na Remessa.
+     * @return RemessaSicredi Uma instancia de RemessaSicredi.
      */
-    public function testeBoletoHTML()
+    public function gerarRemessa(array $boletos)
     {
-
-        $beneficiario = new Pessoa(
+        $remessa = new RemessaSicredi(
             [
-                'nome'      => 'ACME',
-                'endereco'  => 'Rua um, 123',
-                'cep'       => '99999-999',
-                'uf'        => 'UF',
-                'cidade'    => 'CIDADE',
-                'documento' => '99.999.999/9999-99',
+                'agencia'      => $this->beneficiarioAgencia,
+                'carteira'     => '1',
+                'conta'        => $this->beneficiarioContaCorrente,
+                'idremessa'    => 1,
+                'beneficiario' => $this->beneficiario
             ]
         );
 
-        $pagador = new Pessoa(
-            [
-                'nome'      => 'Cliente',
-                'endereco'  => 'Rua um, 123',
-                'bairro'    => 'Bairro',
-                'cep'       => '99999-999',
-                'uf'        => 'UF',
-                'cidade'    => 'CIDADE',
-                'documento' => '999.999.999-99',
-            ]
-        );
+        foreach ($boletos as $boleto) {
+            $remessa->addBoleto($boleto);
+        }
 
-        $boleto = new Sicredi(
-            [
-                'logo'                   => 'logo.png',
-                'dataVencimento'         => new \Carbon\Carbon(),
-                'valor'                  => 100,
-                'multa'                  => false,
-                'juros'                  => false,
-                'numero'                 => 1,
-                'numeroDocumento'        => 1,
-                'pagador'                => $pagador,
-                'beneficiario'           => $beneficiario,
-                'carteira'               => '1',
-                'byte'                   => 2,
-                'agencia'                => 1111,
-                'posto'                  => 11,
-                'conta'                  => 11111,
-                'descricaoDemonstrativo' => ['demonstrativo 1', 'demonstrativo 2', 'demonstrativo 3'],
-                'instrucoes'             => ['instrucao 1', 'instrucao 2', 'instrucao 3'],
-                'aceite'                 => 'S',
-                'especieDoc'             => 'DM',
-            ]
-        );
-
-        return $boleto->renderHtml();
+        return $remessa;
     }
 
     /**
-     * Metodo para testar a geracao da Remessa
+     * Metodo para fazer download da remessa
+     * @param RemessaSicredi $remessa Instancia de RemessaSicredi que sera feita download
+     * @return Download da remessa em .txt
      */
-    public function testeBoletoRemessa()
+    public function downloadRemessa(RemessaSicredi $remessa)
     {
-        $beneficiario = new Pessoa(
-            [
-                'nome'      => 'ACME',
-                'endereco'  => 'Rua um, 123',
-                'cep'       => '99999-999',
-                'uf'        => 'UF',
-                'cidade'    => 'CIDADE',
-                'documento' => '99.999.999/9999-99',
-            ]
-        );
-
-        $pagador = new Pessoa(
-            [
-                'nome'      => 'Cliente',
-                'endereco'  => 'Rua um, 123',
-                'bairro'    => 'Bairro',
-                'cep'       => '99999-999',
-                'uf'        => 'UF',
-                'cidade'    => 'CIDADE',
-                'documento' => '999.999.999-99',
-            ]
-        );
-
-        $boleto = new Sicredi(
-            [
-                'logo'                   => 'logo.png',
-                'dataVencimento'         => new \Carbon\Carbon(),
-                'valor'                  => 100,
-                'multa'                  => false,
-                'juros'                  => false,
-                'numero'                 => 1,
-                'numeroDocumento'        => 1,
-                'pagador'                => $pagador,
-                'beneficiario'           => $beneficiario,
-                'carteira'               => '1',
-                'byte'                   => 2,
-                'agencia'                => 1111,
-                'posto'                  => 11,
-                'conta'                  => 11111,
-                'descricaoDemonstrativo' => ['demonstrativo 1', 'demonstrativo 2', 'demonstrativo 3'],
-                'instrucoes'             => ['instrucao 1', 'instrucao 2', 'instrucao 3'],
-                'aceite'                 => 'S',
-                'especieDoc'             => 'DM',
-            ]
-        );
-
-        // Criando arquivo remessa
-        $remessa = new \Eduardokum\LaravelBoleto\Cnab\Remessa\Cnab400\Banco\Sicredi(
-            [
-                'agencia'      => 2606,
-                'carteira'     => '1',
-                'conta'        => 12510,
-                'idremessa'    => 1,
-                'beneficiario' => $beneficiario,
-            ]
-        );
-
-        $remessa->addBoleto($boleto);
+        //Salvando na pasta arquivos para retornar
         $remessa->save('arquivos' . DIRECTORY_SEPARATOR . 'sicredi.txt');
-
-        //Retornando arquivo .txt da remessa para download
+        dd('inside downloadRemessa', $remessa);
         return response()->download('arquivos/sicredi.txt', 'remessa-sicredi.txt', ['application/txt']);
-
     }
 }

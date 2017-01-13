@@ -9,7 +9,7 @@ class BoletoController extends Controller
 {
 
     /**
-     * @var mixed $repositorioBoletos Instancia do repositorio com a logica operacional
+     * @var RepositorioBoletos $repositorioBoletos Instancia do repositorio com a logica operacional
      */
     protected $repositorioBoletos;
 
@@ -105,7 +105,59 @@ class BoletoController extends Controller
      */
     public function testeBoletoRemessa()
     {
-        return $this->repositorioBoletos->testeBoletoRemessa();
+        $boletos = [];
+
+        $this->repositorioBoletos->setPagador([
+            'nome'      => 'Cliente',
+            'endereco'  => 'Rua um, 123',
+            'bairro'    => 'Bairro',
+            'cep'       => '99999-999',
+            'uf'        => 'UF',
+            'cidade'    => 'CIDADE',
+            'documento' => '999.999.999-99',
+        ]);
+
+        $this->repositorioBoletos->setDadosBoleto(
+            [
+                'instrucoesCobranca' => [
+                    'Linha 1 - Instruções de cobrança',
+                    'Linha 2- Instruções de cobrança',
+                    'Linha 3 - Instruções de cobrança'
+                ],
+                'descDemonstrativo' => [
+                    'Linha 1 - Descrição demonstrativo',
+                    'Linha 2- Descrição demonstrativo',
+                    'Linha 3 - Descrição demonstrativo'
+                ],
+                'dataVencimento' => (new \Carbon\Carbon())->addDays(5),
+                'valorBoleto' => rand(1, 10),
+                'sequencialNossoNumero' => rand(1, 99999)
+            ]
+        );
+
+        $boletos[] = $this->repositorioBoletos->gerarBoleto();
+
+        $this->repositorioBoletos->setDadosBoleto(
+            [
+                'instrucoesCobranca' => [
+                    'Linha 1 - Instruções de cobrança',
+                    'Linha 2- Instruções de cobrança',
+                    'Linha 3 - Instruções de cobrança'
+                ],
+                'descDemonstrativo' => [
+                    'Linha 1 - Descrição demonstrativo',
+                    'Linha 2- Descrição demonstrativo',
+                    'Linha 3 - Descrição demonstrativo'
+                ],
+                'dataVencimento' => (new \Carbon\Carbon())->addDays(5),
+                'valorBoleto' => rand(1, 10),
+                'sequencialNossoNumero' => rand(1, 99999)
+            ]
+        );
+
+        $boletos[] = $this->repositorioBoletos->gerarBoleto();
+        $remessa = $this->repositorioBoletos->gerarRemessa($boletos);
+        return $this->repositorioBoletos->downloadRemessa($remessa);
     }
 
 }
