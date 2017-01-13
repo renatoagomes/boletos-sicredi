@@ -27,3 +27,4 @@ Route::get('boleto', function () {
 Route::get('boleto/pdf', 'BoletoController@testeBoletoPDF');
 Route::get('boleto/html', 'BoletoController@testeBoletoHTML');
 Route::get('boleto/remessa', 'BoletoController@testeBoletoRemessa');
+Route::get('boleto/homologacao', 'BoletoController@gerarArquivosHomologacao');

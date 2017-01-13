@@ -169,28 +169,54 @@ class RepositorioBoletos
     }
 
     /**
+     * Metodo para gerar os PDF's de multiplos boletos
+     * @param $boletos array Array com as instancias de BoletoSicredi que serao gerados os pdfs.
+     * @return array Array com os nomes dos pdfs gerados
+     */
+    public function gerarPDFs(array $boletos)
+    {
+        $nomes = [];
+        foreach ($boletos as $Boleto) {
+            $timestamp = round(microtime(true) * 1000);
+            $nomeArquivo = 'boleto_sicredi_'.$timestamp.'.pdf';
+
+            $pdf = new Pdf();
+            $pdf->addBoleto($Boleto);
+            $pdf->gerarBoleto($pdf::OUTPUT_SAVE, 'arquivos' . DIRECTORY_SEPARATOR . $nomeArquivo);    // ou
+
+            $nomes[] = $nomeArquivo;
+        }
+
+        return $nomes;
+
+
+    }
+
+    /**
      * Metodo para fazer download do PDF do Boleto
      * @param BoletoSicredi $boleto Instancia de BoletoSicredi que sera gerado um pdf para download
      * @return Download do PDF
      */
     public function downloadPDF(BoletoSicredi $boleto)
     {
+        $timestamp = round(microtime(true) * 1000);
+        $nomeArquivo = 'boleto_sicredi_'.$timestamp.'.pdf';
+
         $pdf = new Pdf();
         $pdf->addBoleto($boleto);
-        $pdf->gerarBoleto($pdf::OUTPUT_SAVE, 'arquivos' . DIRECTORY_SEPARATOR . 'sicredi.pdf');    // ou
+        $pdf->gerarBoleto($pdf::OUTPUT_SAVE, 'arquivos' . DIRECTORY_SEPARATOR . $nomeArquivo);    // ou
 
         $headers = array(
             'Content-Type: application/pdf',
         );
 
-        $file = public_path() . '/arquivos/sicredi.pdf';
+        $file = public_path() . '/arquivos/'.$nomeArquivo;
 
-        return response()->download($file, 'boleto-sicredi.pdf', $headers);
+        return response()->download($file, $nomeArquivo, $headers);
     }
 
     /**
-     * Metodo para testar a geracao da Remessa
-     *
+     * Metodo para gerar um arquivo remessa
      * @param $boletos array Array com as instancias de BoletoSicredi que serao inclusos na Remessa.
      * @return RemessaSicredi Uma instancia de RemessaSicredi.
      */
@@ -224,4 +250,5 @@ class RepositorioBoletos
         $remessa->save('arquivos' . DIRECTORY_SEPARATOR . 'sicredi.txt');
         return response()->download('arquivos/sicredi.txt', 'remessa-sicredi.txt', ['application/txt']);
     }
+
 }

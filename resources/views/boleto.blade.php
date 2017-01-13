@@ -79,9 +79,10 @@
                 </div>
 
                 <div class="links">
-                    <a href="/boleto/pdf">PDF</a>
-                    <a href="/boleto/html">HTML</a>
-                    <a href="/boleto/remessa">Remessa</a>
+                    <a href="/boleto/pdf">Teste PDF</a>
+                    <a href="/boleto/html">Teste HTML</a>
+                    <a href="/boleto/remessa">Teste Remessa</a>
+                    <a href="/boleto/homologacao">Arquivos Homologacao</a>
                 </div>
             </div>
         </div>
